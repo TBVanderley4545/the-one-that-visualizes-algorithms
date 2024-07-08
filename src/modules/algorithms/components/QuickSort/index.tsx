@@ -11,7 +11,16 @@ const QuickSort = () => {
 
   const [pivotPoint, setPivotPoint] = useState<number>(vals.length - 1);
 
-  const algorithm = (start: number = 0, end: number = vals.length) => {
+  const [current, setCurrent] = useState<number>(0);
+
+  const sleep = (time: number) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  };
+
+  const algorithm = async (
+    start: number = 0,
+    end: number = vals.length - 1,
+  ) => {
     if (end - start + 1 <= 1) {
       setVals(vals);
       return;
@@ -20,10 +29,11 @@ const QuickSort = () => {
     const pivot = vals[end];
     let lp = start;
 
-    setLeftPointer(lp);
-    setPivotPoint(end);
-
     for (let i = start; i < end; i++) {
+      setCurrent(i);
+
+      await sleep(3000);
+
       if (vals[i] < pivot) {
         const tmp = vals[lp];
 
@@ -38,13 +48,14 @@ const QuickSort = () => {
     vals[end] = vals[lp];
     vals[lp] = pivot;
 
-    setTimeout(() => {
-      algorithm(start, lp - 1);
-    }, 1000);
+    setLeftPointer(lp);
+    setPivotPoint(end);
 
-    setTimeout(() => {
-      algorithm(lp + 1, end);
-    }, 1000);
+    await sleep(3000);
+    algorithm(start, lp - 1);
+
+    await sleep(3000);
+    algorithm(lp + 1, end);
 
     setVals(vals);
   };
@@ -68,6 +79,7 @@ const QuickSort = () => {
               className={classNames(styles["val-column"], {
                 [styles["pivot"]]: pivotPoint === idx,
                 [styles["left-pointer"]]: leftPointer === idx,
+                [styles["current"]]: current === idx,
               })}
             >
               {val}
