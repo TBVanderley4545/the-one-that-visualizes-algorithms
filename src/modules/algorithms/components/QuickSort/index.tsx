@@ -13,26 +13,35 @@ const QuickSort = () => {
 
   const [current, setCurrent] = useState<number>(0);
 
-  const sleep = (time: number) => {
+  const [start, setStart] = useState<number>(0);
+
+  const [end, setEnd] = useState<number>(vals.length - 1);
+
+  const sleep = (time: number = 1000) => {
     return new Promise((resolve) => setTimeout(resolve, time));
   };
 
   const algorithm = async (
-    start: number = 0,
-    end: number = vals.length - 1,
+    currStart: number = 0,
+    currEnd: number = vals.length - 1,
   ) => {
-    if (end - start + 1 <= 1) {
+    setStart(currStart);
+    setEnd(currEnd);
+    setLeftPointer(currStart);
+    setPivotPoint(currEnd);
+
+    if (currEnd - currStart + 1 <= 1) {
       setVals(vals);
       return;
     }
 
-    const pivot = vals[end];
-    let lp = start;
+    const pivot = vals[currEnd];
+    let lp = currStart;
 
-    for (let i = start; i < end; i++) {
+    for (let i = currStart; i < currEnd; i++) {
       setCurrent(i);
 
-      await sleep(3000);
+      await sleep();
 
       if (vals[i] < pivot) {
         const tmp = vals[lp];
@@ -45,17 +54,12 @@ const QuickSort = () => {
       }
     }
 
-    vals[end] = vals[lp];
+    vals[currEnd] = vals[lp];
     vals[lp] = pivot;
 
-    setLeftPointer(lp);
-    setPivotPoint(end);
+    await algorithm(currStart, lp - 1);
 
-    await sleep(3000);
-    algorithm(start, lp - 1);
-
-    await sleep(3000);
-    algorithm(lp + 1, end);
+    await algorithm(lp + 1, currEnd);
 
     setVals(vals);
   };
@@ -80,6 +84,7 @@ const QuickSort = () => {
                 [styles["pivot"]]: pivotPoint === idx,
                 [styles["left-pointer"]]: leftPointer === idx,
                 [styles["current"]]: current === idx,
+                [styles["in-range"]]: idx >= start && idx <= end,
               })}
             >
               {val}

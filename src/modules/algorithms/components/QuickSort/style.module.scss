@@ -12,6 +12,7 @@
   display: flex;
   height: var(--val-height);
   justify-content: center;
+  position: relative;
   width: 1.5em;
 }
 
@@ -24,5 +25,17 @@
 }
 
 .current {
-  border: 2px solid black;
+  border: 2px solid yellowgreen;
+}
+
+.in-range {
+  &::after {
+    background-color: orange;
+    bottom: -1em;
+    content: '';
+    height: 0.25em;
+    left: 0;
+    position: absolute;
+    right: 0;
+  }
 }
