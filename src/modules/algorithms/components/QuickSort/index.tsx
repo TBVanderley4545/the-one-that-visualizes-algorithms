@@ -1,6 +1,7 @@
-import classNames from "classnames";
 import { useState } from "react";
 import styles from "./style.module.scss";
+import sleep from "@/modules/core/utils/sleep";
+import Bar from "@/modules/core/components/Bar";
 
 const QuickSort = () => {
   const [vals, setVals] = useState<Array<number>>([
@@ -16,10 +17,6 @@ const QuickSort = () => {
   const [start, setStart] = useState<number>(0);
 
   const [end, setEnd] = useState<number>(vals.length - 1);
-
-  const sleep = (time: number) => {
-    return new Promise((resolve) => setTimeout(resolve, time));
-  };
 
   const algorithm = async (
     currStart: number = 0,
@@ -79,18 +76,14 @@ const QuickSort = () => {
       <div className={styles.container}>
         {vals.map((val, idx) => {
           return (
-            <div
+            <Bar
               key={`val-item-${val}`}
-              style={{ "--val-height": `${val * 2}em` } as React.CSSProperties}
-              className={classNames(styles["val-column"], {
-                [styles["pivot"]]: pivotPoint === idx,
-                [styles["left-pointer"]]: leftPointer === idx,
-                [styles["current"]]: current === idx,
-                [styles["in-range"]]: idx >= start && idx <= end,
-              })}
-            >
-              {val}
-            </div>
+              Value={val}
+              IsInRange={idx >= start && idx <= end}
+              IsCurrent={current === idx}
+              IsPointer={leftPointer === idx}
+              IsPivot={pivotPoint === idx}
+            />
           );
         })}
       </div>
