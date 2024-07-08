@@ -17,7 +17,7 @@ const QuickSort = () => {
 
   const [end, setEnd] = useState<number>(vals.length - 1);
 
-  const sleep = (time: number = 1000) => {
+  const sleep = (time: number) => {
     return new Promise((resolve) => setTimeout(resolve, time));
   };
 
@@ -41,7 +41,7 @@ const QuickSort = () => {
     for (let i = currStart; i < currEnd; i++) {
       setCurrent(i);
 
-      await sleep();
+      await sleep(1000);
 
       if (vals[i] < pivot) {
         const tmp = vals[lp];
@@ -53,6 +53,8 @@ const QuickSort = () => {
         setLeftPointer(lp);
       }
     }
+
+    await sleep(1000);
 
     vals[currEnd] = vals[lp];
     vals[lp] = pivot;
