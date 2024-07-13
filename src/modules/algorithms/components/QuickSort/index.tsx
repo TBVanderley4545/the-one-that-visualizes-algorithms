@@ -67,7 +67,6 @@ const QuickSort = () => {
   return (
     <>
       <button
-        className={styles["run-button"]}
         type="button"
         onClick={() => {
           algorithm();
@@ -75,6 +74,7 @@ const QuickSort = () => {
       >
         Run Algo
       </button>
+
       <div className={styles.container}>
         {vals.map((val, idx) => {
           return (
