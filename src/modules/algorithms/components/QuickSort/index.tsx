@@ -67,6 +67,7 @@ const QuickSort = () => {
   return (
     <>
       <button
+        className={styles["run-button"]}
         type="button"
         onClick={() => {
           algorithm();
