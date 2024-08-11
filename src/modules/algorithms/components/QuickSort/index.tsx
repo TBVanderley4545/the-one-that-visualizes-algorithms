@@ -1,8 +1,7 @@
 import Bar from "@/modules/core/components/Bar";
+import Graph from "@/modules/core/components/Graph";
 import sleep from "@/modules/core/utils/sleep";
-import { motion } from "framer-motion";
 import { useState } from "react";
-import styles from "./style.module.scss";
 
 const QuickSort = () => {
   const [vals, setVals] = useState<Array<number>>([
@@ -75,30 +74,20 @@ const QuickSort = () => {
         Run Algo
       </button>
 
-      <div className={styles.container}>
+      <Graph>
         {vals.map((val, idx) => {
           return (
-            <motion.div
-              layout="position"
-              transition={{
-                type: "spring",
-                damping: 20,
-                stiffness: 300,
-                duration: 3,
-              }}
-            >
-              <Bar
-                key={`val-item-${val}`}
-                Value={val}
-                IsInRange={idx >= start && idx <= end}
-                IsCurrent={current === idx}
-                IsPointer={leftPointer === idx}
-                IsPivot={pivotPoint === idx}
-              />
-            </motion.div>
+            <Bar
+              key={`val-item-${val}`}
+              Value={val}
+              IsInRange={idx >= start && idx <= end}
+              IsCurrent={current === idx}
+              IsPointer={leftPointer === idx}
+              IsPivot={pivotPoint === idx}
+            />
           );
         })}
-      </div>
+      </Graph>
     </>
   );
 };
