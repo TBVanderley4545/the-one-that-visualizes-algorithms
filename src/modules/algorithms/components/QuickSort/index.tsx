@@ -1,12 +1,11 @@
 import Bar from "@/modules/core/components/Bar";
 import Graph from "@/modules/core/components/Graph";
 import sleep from "@/modules/core/utils/sleep";
+import useSmallDataSet from "@/modules/hooks/useSmallDataSet";
 import { useState } from "react";
 
 const QuickSort = () => {
-  const [vals, setVals] = useState<Array<number>>([
-    9, 8, 3, 5, 2, 1, 4, 10, 7, 6,
-  ]);
+  const [vals, setVals] = useSmallDataSet();
 
   const [leftPointer, setLeftPointer] = useState<number>(0);
 
